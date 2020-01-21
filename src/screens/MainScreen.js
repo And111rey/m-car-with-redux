@@ -2,17 +2,15 @@ import React, {useState, useEffect} from "react"
 import { View, Text, StyleSheet, Button, TextInput, Alert } from 'react-native'
 
 export const MainScreen = ({navigation}) => {
-
-const toReg =() =>{navigation.navigate("Registration")}
-toReg()
+    navigation.navigate("Registration")
     return (
         <View style={styles.center}>
-            <TextInput  placeholder="name"  style={styles.textInput}/>
-            <TextInput  placeholder="password" style={styles.textInput}/>
+            <TextInput placeholder="name"  style={styles.textInput}/>
+            <TextInput placeholder="password" style={styles.textInput}/>
 
         <View style={styles.button} >
             <Button title="Log IN" /> 
-            <Button title="Sign IN" />
+            <Button  title="Sign IN" />
         </View>
             
         </View>

@@ -1,52 +1,49 @@
 import React, {useState, useEffect} from "react"
-import { View, Text, StyleSheet, Button, TextInput, Alert } from 'react-native'
+import { View, Text, StyleSheet, Button, TextInput, Alert, Keyboard ,TouchableWithoutFeedback } from 'react-native'
 
 import { useDispatch, useSelector } from "react-redux" 
-import { registAction } from "../store/actions/registActions"
 
 
 
 export const RegistarationScreen = ({navigation}) => {
     const dispatch = useDispatch()
+     
+    const [name, setName] = useState("")
+    const [sureName, setSureName] = useState("")
+    const [email, setEmail] = useState("")
+    const [pass, setPass] = useState("")
+    const [rePass, setRePass] = useState("")
 
-    const [dataName, setName] = useState("")
-    const [dataSureName, setSureName] = useState("")
-    const [dataEmail, setEmail] = useState("")
-    const [dataPass, setPass] = useState("")
-    const [dataRePass, setRePass] = useState("")
-
+    console.log(name)
     
-    const PostDataForRegistration = () => {
-        // const goToMainScreen = () => {
-        //     navigation.navigate("Main")
-        // }
-        let data = {}
-    if( dataPass === dataRePass && dataPass!= ""  ) {
-        data = {
-            name: dataName,
-            sureName: dataSureName,
-            email: dataEmail,
-            pass: dataPass
+    const saveHandler = () => {
+        let dataForRegistarnito = {}
+        if(pass === rePass) {
+            dataForRegistarnito= {
+                name: name,
+                sureName: sureName,
+                email: email,
+                pass: pass
+            }
         }
-        // console.log("THIS IS DISPACHING",)
-        dispatch(registAction(data));
-        // console.log("THIS IS DISPACHING",)
-        // navigation.navigate("Setting")
-        } else {
-            Alert.alert("Внимательней с паролем") 
-        } 
-    }
+    } 
+
+
+  
     return (
+        <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
         <View style={styles.center}>
-            <TextInput style={styles.textInput} onChangeText={setName} placeholder="Name" value={dataName}/>
-            <TextInput style={styles.textInput} onChangeText={setSureName}  placeholder="Surename" value={dataSureName}/>
-            <TextInput style={styles.textInput} onChangeText={setEmail}  placeholder="Email" value={dataEmail}/>
-            <TextInput style={styles.textInput} onChangeText={setPass}  placeholder="Password" value={dataPass}/>
-            <TextInput style={styles.textInput} onChangeText={setRePass}  placeholder="Repeat Password" value={dataRePass}/>
+            <TextInput  onChangeText={setName} value={name} style={styles.textInput}  placeholder="Name" />
+            <TextInput  onChangeText={setSureName} value={sureName} style={styles.textInput}  placeholder="Surename" />
+            <TextInput  onChangeText={setEmail} value={email} style={styles.textInput}  placeholder="Email" />
+            <TextInput  onChangeText={setPass} value={pass} style={styles.textInput}  placeholder="Password" />
+            <TextInput  onChangeText={setRePass} value={rePass} style={styles.textInput}  placeholder="Repeat Password" />
+            
             <View style={styles.buttonBlock}>
-                <Button  onPress={PostDataForRegistration} title="Go" />
+                <Button   title="Go" />
             </View>
         </View>
+        </TouchableWithoutFeedback>
     );
 }
 

@@ -1,9 +1,8 @@
 import React from "react"
 import { View, StyleSheet,Text } from 'react-native'
-
-import { AppNavigation } from "./src/navigation/AppNavigation"
 import { Provider } from "react-redux"
-import store from "./src/store"
+import { AppNavigation } from "./src/navigation/AppNavigation"
+import store from "./src/store/index"
 
 
 export default function App() {
@@ -11,9 +10,9 @@ export default function App() {
 
 
   return (
-      <Provider store={store} >
+        <Provider store={store} >
           <AppNavigation />
-      </Provider>
+        </Provider>
   );
 
   }

@@ -1,9 +1,11 @@
-import { createStore, combineReducers } from "redux"
-import {registartionReducer} from "./reducers/registartionReducer"
+import { createStore, combineReducers, applyMiddleware } from "redux"
+import thunk  from "redux-thunk"
+import { registrationReducer } from "./reducers/registrationReducer"
 
 
 const rootReducer = combineReducers({
-    registartionReducer: registartionReducer
+    registration: registrationReducer
 })
 
-export default createStore(rootReducer) 
+
+export default createStore(rootReducer, applyMiddleware(thunk))
