@@ -3,16 +3,28 @@ import { Alert } from "react-native"
 import { REGISTRATION } from "../types"
 
 
-const postData = async (data) => {
-    await fetch("https://car-magage.firebaseio.com/ownerData.json",{
-          method:"POST",
-          headers:{"Content-Type": "aplication/json"},
-          body: JSON.stringify({data})
-      })
-}
+const workkWithserwer = async (data) => {
+    const response  = await fetch("https://car-magage.firebaseio.com/ownerData.json", {
+        method:"GET",
+        headers:{"Content-Type": "aplication/json"},
+    })
+    const dataFromServ = await response.json()
+    console.log(dataFromServ)
+    let dataArray = {}
+    if (dataFromServ === null) {
+        await fetch("https://car-magage.firebaseio.com/ownerData.json",{
+            method:"POST",
+            headers:{"Content-Type": "aplication/json"},
+            body: JSON.stringify({data})
+        })
+    } else {
+         dataArray = Object.values(dataFromServ)    
+    }
+    // console.log(Object.values(dataFromServ))
+    // const dataArray = Object.values(dataFromServ)
 
-const checkData = (data) => {
-
+    
+    return dataArray
 }
 
 
@@ -21,24 +33,29 @@ export  const registrationActions = (data) => {
     // console.log("пришли данные от пользователя....  ", data)
 
 
-    /////////////////////////////////////////////////
-    return async  dispatch  =>  {
-        const response = await fetch("https://car-magage.firebaseio.com/ownerData.json", {
-            method:"GET",
-            headers:{"Content-Type": "aplication/json"},
-        })
+    
+    return  dispatch  =>  {
 
-        const dataFromServ = await response.json()
-        const dataArray = Object.values(dataFromServ)
-        const owner_Finded = dataArray.find((el) => {
-            return (el.data.name === data.name) && (el.data.pass === data.pass)
-        })
-        if(!owner_Finded) {
-            postData(data)
-        } else {
-            Alert.alert("Такой пользователь уже есть....")
-        }
-      
+        workkWithserwer(data)
+            .then((e) => {
+                // console.log(e)
+                const owner_Finded = e.find((el) => {
+                    return (el.data.name === data.name && el.data.pass === data.pass)
+                })
+                console.log("профильтрований овнер во ВТОРОЙ зене..... ",owner_Finded)
+                if(owner_Finded) {
+                    Alert.alert("Пользователь уже создавался.....")
+                } else {
+                    fetch("https://car-magage.firebaseio.com/ownerData.json",{
+                        method:"POST",
+                        headers:{"Content-Type": "aplication/json"},
+                        body: JSON.stringify({data})
+                    })
+
+
+                }
+                
+            })
 
 
       
@@ -48,10 +65,5 @@ export  const registrationActions = (data) => {
         })
     }     
 }
-
-
-
-
-
 
 
