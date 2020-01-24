@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import { View, Text, StyleSheet, Button, TextInput, Alert, Keyboard ,TouchableWithoutFeedback } from 'react-native'
 
 import { useDispatch, useSelector } from "react-redux" 
+import {registrationActions} from "../store/actions/registrationAction"
 
 
 
@@ -14,18 +15,25 @@ export const RegistarationScreen = ({navigation}) => {
     const [pass, setPass] = useState("")
     const [rePass, setRePass] = useState("")
 
-    console.log(name)
+    // console.log(name)
+    // console.log(" parll ", pass)
+    // console.log("povtor parolya ", rePass)
     
     const saveHandler = () => {
-        let dataForRegistarnito = {}
+        let userData = {}
         if(pass === rePass) {
-            dataForRegistarnito= {
+            userData = {
                 name: name,
                 sureName: sureName,
                 email: email,
                 pass: pass
             }
+        } else {
+            Alert.alert("Пароли не совпали...")
         }
+        // console.log(userData)
+        dispatch(registrationActions(userData))
+        // registrationActions(userData)
     } 
 
 
@@ -40,7 +48,7 @@ export const RegistarationScreen = ({navigation}) => {
             <TextInput  onChangeText={setRePass} value={rePass} style={styles.textInput}  placeholder="Repeat Password" />
             
             <View style={styles.buttonBlock}>
-                <Button   title="Go" />
+                <Button onPress={saveHandler}  title="Go" />
             </View>
         </View>
         </TouchableWithoutFeedback>
