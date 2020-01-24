@@ -21,18 +21,19 @@ export const RegistarationScreen = ({navigation}) => {
     
     const saveHandler = () => {
         let userData = {}
-        if(pass === rePass) {
+        if((pass === rePass) && (name != false) && (sureName != false) && (email != false) && (pass != false)) {
             userData = {
                 name: name,
                 sureName: sureName,
                 email: email,
                 pass: pass
             }
+            dispatch(registrationActions(userData))
+            // navigation.navigate("Setting") //////подправить с логикой перехода на следующий скрин
         } else {
-            Alert.alert("Пароли не совпали...")
+            Alert.alert("Коректно заполняйте поля...")
         }
         // console.log(userData)
-        dispatch(registrationActions(userData))
         // registrationActions(userData)
     } 
 
