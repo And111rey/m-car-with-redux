@@ -8,17 +8,20 @@ import {registrationActions} from "../store/actions/registrationAction"
 
 export const RegistarationScreen = ({navigation}) => {
     const dispatch = useDispatch()
-     
+    
+
+
     const [name, setName] = useState("")
     const [sureName, setSureName] = useState("")
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const [rePass, setRePass] = useState("")
 
-    // console.log(name)
-    // console.log(" parll ", pass)
-    // console.log("povtor parolya ", rePass)
+
     
+const dataFromReducer = useSelector(state => state.registration)
+
+console.log("DATA FROM REDUCER...->", dataFromReducer)
     const saveHandler = () => {
         let userData = {}
         if((pass === rePass) && (name != false) && (sureName != false) && (email != false) && (pass != false)) {
@@ -29,12 +32,9 @@ export const RegistarationScreen = ({navigation}) => {
                 pass: pass
             }
             dispatch(registrationActions(userData))
-            // navigation.navigate("Setting") //////подправить с логикой перехода на следующий скрин
         } else {
             Alert.alert("Коректно заполняйте поля...")
         }
-        // console.log(userData)
-        // registrationActions(userData)
     } 
 
 
@@ -79,7 +79,6 @@ const styles =  StyleSheet.create({
         padding: 4
     },
     buttonBlock: {
-        // flexDirection: "row",
         padding: 5,
         width: "50%",
     },

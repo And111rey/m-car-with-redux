@@ -5,12 +5,11 @@ import { REGISTRATION } from "../types"
 
 const workkWithSerwer = async (data) => {
     
-    const response  = await fetch("https://car-magage.firebaseio.com/ownerData.json", {
+   try {const response  = await fetch("https://car-magage.firebaseio.com/ownerData.json", {
         method:"GET",
         headers:{"Content-Type": "aplication/json"},
     })
     const dataFromServ = await response.json()
-    // console.log(dataFromServ)
     let dataArray = {}
     if (dataFromServ === null) {
         const response = await fetch("https://car-magage.firebaseio.com/ownerData.json",{
@@ -41,25 +40,32 @@ const workkWithSerwer = async (data) => {
         return id.name
 
     }
+} catch(err) {
+    console.log("something happened in the regisarationAction.js =>", err)
+}
 
 }
 
-
-
 export  const registrationActions = (data) => {
-    // console.log("пришли данные от пользователя....  ", data)
 
-
-    
     return  dispatch  =>  {
 
-        workkWithSerwer(data).then((res) => {
+            workkWithSerwer(data).then( async (res) => {
+            console.log("DATA FROM THEN... ->  ", res)
+
+            const response  = await fetch("https://car-magage.firebaseio.com/ownerData.json", {
+                method:"GET",
+                headers:{"Content-Type": "aplication/json"},
+            })
+            const dataFromServ = (await response.json())[res]
+            console.log("DATA AGAIN... ", dataFromServ)
+
+
             dispatch({
                 type: REGISTRATION,
-                payload: res
+                payload: dataFromServ
             })
         })
-
     }     
 }
 
