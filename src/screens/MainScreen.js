@@ -1,19 +1,36 @@
-import React, {useState, useEffect} from "react"
-import { View, Text, StyleSheet, Button, TextInput, Alert } from 'react-native'
+import React, {useState, useEffect, useReducer} from "react"
+import { View, Text, StyleSheet, Button, TextInput, Keyboard ,TouchableWithoutFeedback } from 'react-native'
+import { useDispatch } from "react-redux" 
+import { loginAction } from "../store/actions/loginAction"
 
 export const MainScreen = ({navigation}) => {
-    navigation.navigate("Registration")
+    const dispatch = useDispatch()
+
+ 
+const [name, setNmae] = useState("")
+const [pass, setPass] = useState("")
+
+const hendleSend = () => {
+    let data = {name, pass}
+    console.log(data)
+    dispatch(loginAction(data))
+}
+
+
+
     return (
+        <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
         <View style={styles.center}>
-            <TextInput placeholder="name"  style={styles.textInput}/>
-            <TextInput placeholder="password" style={styles.textInput}/>
+            <TextInput placeholder="name"  onChangeText={setNmae} style={styles.textInput}/>
+            <TextInput placeholder="password" onChangeText={setPass} style={styles.textInput}/>
 
         <View style={styles.button} >
-            <Button title="Log IN" /> 
-            <Button  title="Sign IN" />
+            <Button title="Log IN"onPress={hendleSend}/> 
+            <Button  title="Sign IN"  onPress={()=>{navigation.navigate("Registration")}}/>
         </View>
             
         </View>
+        </TouchableWithoutFeedback>
     )
 }
 

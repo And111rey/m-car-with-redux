@@ -9,7 +9,7 @@ import {useSelector} from "react-redux"
 export const Project = () => {
 
     const dataFromReducer = useSelector(state => state.registration)
-    console.log("DAtA on  App.js ->>> ", dataFromReducer)
+    // console.log("DAtA on  App.js ->>> ", dataFromReducer)
     return (
         !dataFromReducer? <AppNavigation />: < AppNavagationLevel2 />
         )    
