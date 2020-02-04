@@ -15,7 +15,6 @@ const checkingForLogin = async () => {
 
 
 export  const loginAction = (data) => {
-// console.log("1 " , data)
 
 
     return  dispatch  =>  {
@@ -25,15 +24,16 @@ export  const loginAction = (data) => {
                 let user = res.find((el) => {
                     return (el.data.name === data.name && el.data.pass === data.pass)
                 })
-                console.log("-*-*-*-",user)
+                // console.log("-*-*-*-",user)
+                dispatch({
+                    type: LOG_IN,
+                    payload: user
+                })
             })
 
-        dispatch({
-            type: LOG_IN,
-            payload: ""
-        })
+       
            
-        }
+        } 
      
     }     
 

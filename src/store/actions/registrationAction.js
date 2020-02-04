@@ -36,7 +36,7 @@ const workkWithSerwer = async (data) => {
             body: JSON.stringify({data})
         })
         const id = await response.json()
-        console.log("id: ", id.name)
+        // console.log("id: ", id.name)
         return id.name
 
     }
@@ -51,14 +51,14 @@ export  const registrationActions = (data) => {
     return  dispatch  =>  {
 
             workkWithSerwer(data).then( async (res) => {
-            console.log("DATA FROM THEN... ->  ", res)
+            // console.log("DATA FROM THEN... ->  ", res)
 
             const response  = await fetch("https://car-magage.firebaseio.com/ownerData.json", {
                 method:"GET",
                 headers:{"Content-Type": "aplication/json"},
             })
             const dataFromServ = (await response.json())[res]
-            console.log("DATA AGAIN... ", dataFromServ)
+            // console.log("DATA AGAIN... ", dataFromServ)
 
 
             dispatch({

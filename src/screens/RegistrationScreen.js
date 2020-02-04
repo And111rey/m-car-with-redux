@@ -19,9 +19,9 @@ export const RegistarationScreen = ({navigation}) => {
 
 
     
-const dataFromReducer = useSelector(state => state.registration)
+// const dataFromReducer = useSelector(state => state.registration)
 
-console.log("DATA FROM REDUCER...->", dataFromReducer)
+// console.log("DATA FROM REDUCER...->", dataFromReducer)
     const saveHandler = () => {
         let userData = {}
         if((pass === rePass) && (name != false) && (sureName != false) && (email != false) && (pass != false)) {
