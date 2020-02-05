@@ -8,7 +8,9 @@ const checkingForLogin = async () => {
         headers:{"Content-Type": "aplication/json"},
     })
     const dataFromServ =  await response.json()
-    const result = Object.values(dataFromServ) 
+    const result = Object.keys(dataFromServ).map((id, i) => {
+        return {...Object.values(dataFromServ)[i], id }
+    })
     return result
  
 }
@@ -20,11 +22,9 @@ export  const loginAction = (data) => {
     return  dispatch  =>  {
         checkingForLogin()
             .then((res) => {
-                console.log("RES...." ,res, "--DATA--", data.name)
                 let user = res.find((el) => {
                     return (el.data.name === data.name && el.data.pass === data.pass)
                 })
-                // console.log("-*-*-*-",user)
                 dispatch({
                     type: LOG_IN,
                     payload: user

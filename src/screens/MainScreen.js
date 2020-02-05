@@ -12,7 +12,6 @@ const [pass, setPass] = useState("")
 
 const hendleSend = () => {
     let data = {name, pass}
-    console.log(data)
     dispatch(loginAction(data))
 }
 

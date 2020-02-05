@@ -1,36 +1,46 @@
 import React, {useState, useEffect} from "react"
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native'
+import { useDispatch, useSelector } from "react-redux" 
+import { updateDataSettingsAction } from "../store/actions/settingAction"
+
 
 export const AddCarScreen = ({navigation}) => {
+    let data = useSelector(state => state.registration)
+    // const dispatch = useDispatch()
+    // console.log(...data)
   
     const [carName, setCarName] = useState("") 
     const [engine, setEngine] = useState(false)
     const [cond, setCond] = useState(false)
     const [signal, setSignal] = useState(false)
-    console.log(engine)
+
+
+
     const sendToUpdata = () => {
-        let data = { carName, engine, cond, signal };
-        console.log(data)
+        let settings={carName, engine, cond, signal}
+        let dataWithSettings= { ...data, settings: settings  };
+        // console.log(dataWithSettings)
+        updateDataSettingsAction(dataWithSettings)
     }
   
         
 
     return (
         <View style={styles.center}>
-            <Text style={{ fontSize: 30,color:"#FFFFF0" }} >Tuning car functions </Text>
+            <Text style={{ fontSize: 30,color:"#FFFFF0" }} > Additional functions </Text>
             <TextInput  style={styles.textInput} onChangeText={setCarName}/>
             <Button  title="Create" onPress={sendToUpdata} />
 
 
-            <TouchableOpacity style={styles.border} onPress={()=>{setEngine(!engine)}}>
-                <Text style={{color: (engine? "red": "#006400")}} >Start the engine</Text>
+            <TouchableOpacity style={[styles.border, {backgroundColor:engine? "#DCCB3D": "#949799"}]} onPress={()=>{setEngine(!engine)}}>
+                <Text style={{color: (engine? "red": "#006400")}} > {engine? "Engine Fn Active": "Engine Fn"}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.border} onPress={()=>{setCond(!cond)}} >
-                <Text style={{color: (cond? "red": "#006400")}} >Including air conditioning</Text>
+            <TouchableOpacity style={[styles.border, {backgroundColor:cond? "#DCCB3D": "#949799"}]} onPress={()=>{setCond(!cond)}} >
+                <Text style={{color: (cond? "red": "#006400")}} >{cond? "Conditioner fn active": "Conditioner fn"}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.border} onPress={()=>{setSignal(!signal)}} >
+            <TouchableOpacity style={[styles.border, {backgroundColor:signal? "#DCCB3D": "#949799"}]} onPress={()=>{setSignal(!signal)}} >
                 <Text style={{color: (signal? "red": "#006400")}} >Signaling</Text>
             </TouchableOpacity>
         </View>

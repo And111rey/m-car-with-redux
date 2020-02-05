@@ -5,15 +5,16 @@ import { useSelector } from "react-redux"
 export const SettingScreen = ({navigation}) => {
 
        
-const dataFromReducer = useSelector(state => state.registration.data)
-console.log("on settings Screen....", dataFromReducer)
+const dataFromReducer = useSelector(state => state.registration)
+// console.log("on settings Screen....", dataFromReducer)
 
     return (
         <View style={styles.center}>
             <Text style={styles.shadowInformation}> INFORMATION</Text>
-            <Text style={{color:"#FFFFF0"}} > NAME:<Text style={{color: "#1E90FF"}}> {dataFromReducer.name}</Text> </Text>
-            <Text style={{color:"#FFFFF0"}}> SureName:<Text style={{color: "#1E90FF"}}> {dataFromReducer.sureName}</Text></Text>
-            <Text style={{color:"#FFFFF0"}}> Email: <Text style={{color: "#1E90FF"}}>{dataFromReducer.email}</Text> </Text>
+            <Text style={{color:"#FFFFF0"}} > NAME:<Text style={{color: "#1E90FF"}}> {dataFromReducer.data.name}</Text> </Text>
+            <Text style={{color:"#FFFFF0"}}> SureName:<Text style={{color: "#1E90FF"}}> {dataFromReducer.data.sureName}</Text></Text>
+            <Text style={{color:"#FFFFF0"}}> Email: <Text style={{color: "#1E90FF"}}>{dataFromReducer.data.email}</Text> </Text>
+            <Text style={{color:"#FFFFF0"}}> ID: <Text style={{color: "#1E90FF"}}>{dataFromReducer.id}</Text> </Text>
             <View style={styles.button}>
                 <Button title="Create car control" onPress={()=>{navigation.navigate("AddCar")}}/>
             </View>
