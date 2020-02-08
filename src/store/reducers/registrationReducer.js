@@ -1,10 +1,10 @@
-import { REGISTRATION, LOG_IN } from "../types"
+import { AUTHENTICATION, LOG_IN } from "../types"
 
 const initialState = ""
 
  export const registrationReducer = (state= initialState, action) => {
 switch (action.type) {
-    case REGISTRATION:
+    case AUTHENTICATION:
         console.log(" DATA IN REDUCER",action.payload) 
         // state = action.payload
         // return state

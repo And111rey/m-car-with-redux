@@ -1,6 +1,6 @@
 import { Alert } from "react-native"
 
-import { REGISTRATION } from "../types"
+import { AUTHENTICATION } from "../types"
 
 
 // const workkWithSerwer = async (data) => {
@@ -49,30 +49,48 @@ import { REGISTRATION } from "../types"
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const findCreatedUser = async (dataFromServer, dataFromUser ) => {
-    console.log("server***--- ", Object.values(dataFromServer))
-    console.log("USER***--- ", dataFromUser)
-    const dataArray = Object.values(dataFromServer)
-    const owner_Finded = await dataArray.find((el) => {
+const findCreatedUser = async (dataFromServer, dataFromUser) => {
+    // console.log("server***--- ", Object.entries(dataFromServer))
+    // console.log("USER***--- ", dataFromUser)
+    const dataArray = Object.entries(dataFromServer)
+    const ownerFinded = await dataArray.find((el) => {
         // return (el.data.name === data.name && el.data.pass === data.pass)            // old version
-        return (el.name === dataFromUser.name && el.pass === dataFromUser.pass)
+        return (el[1].name === dataFromUser.name && el[1].pass === dataFromUser.pass)
     })
-    if (owner_Finded) {
+    if (ownerFinded) {
         Alert.alert("User already exists")
+        console.log("Поьзователь уже есть....")
     } else {
         return fetch("https://car-magage.firebaseio.com/ownerData.json",{
             method: "POST",
             headers: {"Content-Type": "aplication/json"},
             body: JSON.stringify(dataFromUser)
         })
-        .then(async (response) => {                    //проверить этот async - без ASYNC пиходит пустой промис 
-            const id = await response.json()
-            console.log("ВОзврвт ключа из ПОЛНОЙ БАЗЫ", id)
-            return id
+        .then(response => response.json())
+        .then((res) =>{
+            getAllDataFromServInArr()
+                .then((data) =>{
+                    const freshUser = data.find((el) => {
+                        return el[0] === res.name
+                    })
+                    console.log("*******",freshUser)
+                })
         })
-
     }
 }
+
+
+const getAllDataFromServInArr = async () => {
+    const respons = await fetch("https://car-magage.firebaseio.com/ownerData.json",{
+        method: "GET",
+        headers: {"Content-Type": "aplication/json"}
+    })
+    const allData = await respons.json()
+    const data = Object.entries(allData)
+    return data 
+}
+
+
 const fetchingData = (dataFromUser) => {
     console.log(dataFromUser)
     return fetch("https://car-magage.firebaseio.com/ownerData.json",{
@@ -103,7 +121,7 @@ export  const registrationActions = (dataFromUser) => {
                     findCreatedUser(dataFromServer, dataFromUser)
                         .then((res => {
                             return dispatch({
-                                type: REGISTRATION,
+                                type: AUTHENTICATION,
                                 payload: res
                             })
                         }))
@@ -111,21 +129,12 @@ export  const registrationActions = (dataFromUser) => {
                     fetchingData(dataFromUser)
                         .then((res => {
                             return dispatch({
-                                type: REGISTRATION,
+                                type: AUTHENTICATION,
                                 payload: res
                             })
                         }))    
                 }
             })
-            // .catch((err) => console.log(err))
-
-
-
-
-            // dispatch({
-            //     type: REGISTRATION,
-            //     payload: ""
-            // })
     }     
 }
 

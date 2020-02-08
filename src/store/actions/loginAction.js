@@ -36,7 +36,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-import { LOG_IN } from "../types"
+import { AUTHENTICATION } from "../types"
 
 const checkingForLogin_1 = async () => {
     const response  =  await fetch("https://car-magage.firebaseio.com/ownerData.json", {
@@ -57,13 +57,12 @@ const checkingForLogin = (dataFromUser) => {
     return fetch("https://car-magage.firebaseio.com/ownerData.json")
         .then(res => res.json())
         .then(res => {
-            let obj = Object.values(res)
-            let res1 = Object.entries(res)
-            let result1 = res1.find((el) => {
-                return el[1].name == dataFromUser.name
+            let dataArray = Object.entries(res)
+            let result = dataArray.find((el) => {
+                return el[1].name == dataFromUser.name && el[1].pass == dataFromUser.pass
             })
-           //el[1].name == "Q"
-            console.log(result1 )
+            console.log(result )
+            return result
         })
 
         
@@ -72,20 +71,15 @@ const checkingForLogin = (dataFromUser) => {
 
 
 export  const loginAction = (dataFromUser) => {
-
-
     return  dispatch  =>  {
         console.log("data from USER ->>",dataFromUser)
         checkingForLogin(dataFromUser)
-        
-
-        
-
-        dispatch({
-            type: LOG_IN,
-            payload: ""
-        })
-
+            .then((res) => {
+                dispatch({
+                    type: AUTHENTICATION,
+                    // payload: res
+                })
+            })
         } 
 
     }     
