@@ -23,14 +23,17 @@ export const RegistarationScreen = ({navigation}) => {
 
 // console.log("DATA FROM REDUCER...->", dataFromReducer)
     const saveHandler = () => {
-        let userData = {}
+        let userData
         if((pass === rePass) && (name != false) && (sureName != false) && (email != false) && (pass != false)) {
-            userData = {
+             userData = {
                 name: name,
                 sureName: sureName,
                 email: email,
-                pass: pass
+                pass: pass,
+                settings: {}
             }
+            // userData = {...userData, name: name, sureName: sureName, email: email, pass: pass}
+            // console.log(userData)
             dispatch(registrationActions(userData))
         } else {
             Alert.alert("Коректно заполняйте поля...")

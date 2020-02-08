@@ -5,7 +5,7 @@ import { loginAction } from "../store/actions/loginAction"
 
 export const MainScreen = ({navigation}) => {
     const dispatch = useDispatch()
-
+    navigation.navigate("Registration")
  
 const [name, setNmae] = useState("")
 const [pass, setPass] = useState("")
