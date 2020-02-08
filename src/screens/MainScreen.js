@@ -5,7 +5,7 @@ import { loginAction } from "../store/actions/loginAction"
 
 export const MainScreen = ({navigation}) => {
     const dispatch = useDispatch()
-    navigation.navigate("Registration")
+    // navigation.navigate("Registration")
  
 const [name, setNmae] = useState("")
 const [pass, setPass] = useState("")
@@ -13,6 +13,7 @@ const [pass, setPass] = useState("")
 const hendleSend = () => {
     let data = {name, pass}
     dispatch(loginAction(data))
+    console.log("from input   ",data)
 }
 
 
