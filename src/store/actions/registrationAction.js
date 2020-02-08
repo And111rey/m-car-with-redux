@@ -46,11 +46,14 @@ import { REGISTRATION } from "../types"
 
 // }
 
-const findCreatedUser =  (dataFromServer, dataFromUser ) => {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const findCreatedUser = async (dataFromServer, dataFromUser ) => {
     console.log("server***--- ", Object.values(dataFromServer))
     console.log("USER***--- ", dataFromUser)
     const dataArray = Object.values(dataFromServer)
-    const owner_Finded = dataArray.find((el) => {
+    const owner_Finded = await dataArray.find((el) => {
         // return (el.data.name === data.name && el.data.pass === data.pass)            // old version
         return (el.name === dataFromUser.name && el.pass === dataFromUser.pass)
     })
@@ -72,7 +75,7 @@ const findCreatedUser =  (dataFromServer, dataFromUser ) => {
 }
 const fetchingData = (dataFromUser) => {
     console.log(dataFromUser)
-    fetch("https://car-magage.firebaseio.com/ownerData.json",{
+    return fetch("https://car-magage.firebaseio.com/ownerData.json",{
         method: "POST",
         headers: {"Content-Type": "aplication/json"},
         body: JSON.stringify(dataFromUser)
@@ -83,7 +86,9 @@ const fetchingData = (dataFromUser) => {
         return id
     })
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export  const registrationActions = (dataFromUser) => {
     console.log("ДАННЫЕ ПРИШЛИ СО СКРИНА --->>>", dataFromUser)
     return  dispatch  =>  {
@@ -112,6 +117,7 @@ export  const registrationActions = (dataFromUser) => {
                         }))    
                 }
             })
+            // .catch((err) => console.log(err))
 
 
 
