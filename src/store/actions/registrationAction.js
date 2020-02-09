@@ -68,12 +68,12 @@ const findCreatedUser = async (dataFromServer, dataFromUser) => {
         })
         .then(response => response.json())
         .then((res) =>{
-            getAllDataFromServInArr()
+            return getAllDataFromServInArr()
                 .then((data) =>{
                     const freshUser = data.find((el) => {
                         return el[0] === res.name
                     })
-                    console.log("*******",freshUser)
+                    return freshUser
                 })
         })
     }
@@ -98,10 +98,15 @@ const fetchingData = (dataFromUser) => {
         headers: {"Content-Type": "aplication/json"},
         body: JSON.stringify(dataFromUser)
     })
-    .then(async (response) => {                    //проверить этот async - без ASYNC пиходит пустой промис 
-        const id = await response.json()
-        console.log("ВОзврвт ключа пустой БАЗЫ", id)
-        return id
+    .then(res => res.json())
+    .then((res) =>{
+        return getAllDataFromServInArr()
+            .then((data) =>{
+                const freshUser = data.find((el) => {
+                    return el[0] === res.name
+                })
+                return freshUser
+            })
     })
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +123,7 @@ export  const registrationActions = (dataFromUser) => {
                 // console.log(dataFromServer)
                 // dataFromServer? findCreatedUser(dataFromServer, dataFromUser): fetchingData(dataFromUser)
                 if(dataFromServer) {
-                    findCreatedUser(dataFromServer, dataFromUser)
+                    return findCreatedUser(dataFromServer, dataFromUser)
                         .then((res => {
                             return dispatch({
                                 type: AUTHENTICATION,
